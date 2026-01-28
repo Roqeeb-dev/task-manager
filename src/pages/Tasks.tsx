@@ -1,6 +1,7 @@
 import TaskDetails from "../components/TaskDetails";
 import TaskList from "../components/TaskList";
 import { useState } from "react";
+import { Plus } from "lucide-react";
 
 export interface Task {
   _id: number;
@@ -12,32 +13,48 @@ export interface Task {
 
 const defaultTask: Task = {
   _id: 1,
-  title: "Title",
-  description: "Description",
+  title: "Design landing page",
+  description: "Create a responsive landing page for the product",
   status: "pending",
   priority: "Medium",
 };
 
 export default function Tasks() {
   const [tasks, setTasks] = useState<Task[]>([defaultTask]);
+
   return (
-    <main className="max-w-6xl mx-auto">
-      {/* Header Details */}
-      <header className="flex items-center justify-between">
+    <main className="max-w-6xl mx-auto px-4 py-10">
+      {/* Header */}
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b pb-6">
         <div>
-          <h1 className="text-4xl font-semibold">Task Manager</h1>
-          <p className="text-lg text-gray-800 my-1">
-            Manage your task effectively and stay organized
+          <h1 className="text-4xl font-semibold tracking-tight">
+            Task Manager
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Stay organized and keep track of your daily tasks
           </p>
         </div>
-        <button className="bg-blue-700 text-white text-lg p-3 font-medium rounded-lg hover:bg-blue-800 transition">
+
+        <button className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-3 text-sm font-medium rounded-lg hover:bg-blue-700 transition shadow-sm">
+          <Plus size={18} />
           Add Task
         </button>
       </header>
 
-      {/* Main Content */}
-      <TaskDetails tasks={tasks} />
-      <TaskList />
+      {/* Content */}
+      <section className="mt-8 space-y-6">
+        <TaskDetails tasks={tasks} />
+
+        {tasks.length > 0 ? (
+          <TaskList tasks={tasks} />
+        ) : (
+          <div className="text-center py-16 border rounded-lg bg-gray-50">
+            <p className="text-gray-600">
+              No tasks yet. Click <strong>Add Task</strong> to get started.
+            </p>
+          </div>
+        )}
+      </section>
     </main>
   );
 }

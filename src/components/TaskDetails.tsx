@@ -13,12 +13,13 @@ export default function TaskDetails({ tasks }: TaskListProps) {
   ).length;
   const completedTasks = tasks.filter((t) => t.status === "done").length;
 
-  const [tasksProps, setTasksList] = useState([
+  const [tasksProps] = useState([
     { text: "Total Tasks", count: totalTasks, color: "black" },
     { text: "Pending", count: pendingTasks, color: "yellow-600" },
     { text: "In-Progress", count: inProgressTasks, color: "blue-500" },
     { text: "Completed", count: completedTasks, color: "green-500" },
   ]);
+
   return (
     <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-6">
       {tasksProps.map((task) => (
