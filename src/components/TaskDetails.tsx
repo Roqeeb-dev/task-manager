@@ -13,7 +13,7 @@ export default function TaskDetails({ tasks }: TaskListProps) {
   ).length;
   const completedTasks = tasks.filter((t) => t.status === "done").length;
 
-  const [tasksProps] = useState([
+  const [tasksProps, setTasksProps] = useState([
     { text: "Total Tasks", count: totalTasks, color: "black" },
     { text: "Pending", count: pendingTasks, color: "yellow-600" },
     { text: "In-Progress", count: inProgressTasks, color: "blue-500" },

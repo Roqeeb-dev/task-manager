@@ -13,8 +13,8 @@ export interface Task {
 
 const defaultTask: Task = {
   _id: 1,
-  title: "Design landing page",
-  description: "Create a responsive landing page for the product",
+  title: "Welcome",
+  description: "Welcome to this application",
   status: "pending",
   priority: "Medium",
 };
