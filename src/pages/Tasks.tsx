@@ -94,6 +94,7 @@ export default function Tasks() {
         onSave={(task) => saveTask(task)}
       />
 
+      {/* Dialog */}
       <Dialog
         isOpen={showDialog}
         onClose={() => setShowDialog(false)}

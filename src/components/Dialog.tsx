@@ -26,8 +26,7 @@ export default function Dialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium
-                       text-gray-700 hover:bg-gray-100 transition"
+            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
           >
             Cancel
           </button>
@@ -38,8 +37,7 @@ export default function Dialog({
               onConfirm();
               onClose();
             }}
-            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium
-                       text-white shadow hover:bg-red-700 transition"
+            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-red-700 transition"
           >
             Delete
           </button>
