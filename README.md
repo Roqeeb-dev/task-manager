@@ -1,73 +1,103 @@
-# React + TypeScript + Vite
+# Task Manager App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React application to manage your daily tasks. You can **add, edit, and delete tasks**, track their **status and priority**, and view summary statistics like total, pending, and completed tasks. The app uses **mock API calls** to simulate network requests, making it easy to run without a backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- **Add Task** – Create a new task with title, description, status, and priority.
+- **Edit Task** – Update an existing task using the same modal form.
+- **Delete Task** – Delete a task with a confirmation dialog.
+- **Task Summary** – View total, pending, in-progress, completed, and high-priority tasks.
+- **Loading & Error States** – Simulated API delay with proper loading indicators and error handling.
+- **Reusable Components** – Clean separation of concerns (TaskList, TaskDetails, Modal, Dialog).
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+---
 
-## Expanding the ESLint configuration
+## 💻 Installation & Running the App
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Clone the repository:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+git clone <repository-url>
+cd task-manager
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+2. Install dependencies:
+Copy code
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Start the development server:
+Copy code
+npm start
+
+4. Open your browser and navigate to:
+http://localhost:3000
+The app should be up and running.
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ API Configuration / Mock Mode
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- The app is **mocked by default** – no backend is required.
+- All “API calls” are simulated using `setTimeout` inside the app.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+If you have a backend in the future, you can configure the API base URL in one place:
+
+```ts
+// src/config/api.ts
+export const API_BASE_URL = process.env.REACT_APP_API_URL || "https://your-api-url";
+
+
+.
+
+## 🧩 Pages & Components
+
+### Pages / Main Layout
+
+Tasks.tsx – Main page of the app; manages state for tasks, loading, errors, modal, and dialogs.
+
+### Components
+
+1. **TaskDetails**
+
+   Displays a summary of all tasks, including:
+   - Total Tasks
+   - Pending Tasks
+   - In-Progress Tasks
+   - Completed Tasks
+   - High Priority Tasks
+
+2. **TaskList**
+
+   Displays a table of tasks with:
+   - Title, Status, Priority
+   - Edit and Delete actions
+   - Calls `onEdit` and `onDelete` callbacks from the parent
+
+3. **Modal**
+
+   A reusable form for adding or editing tasks.
+   - Receives an optional `initialTask` prop to pre-fill fields when editing
+   - Handles form validation
+   - Calls `onSave` on submit
+
+4. **Dialog**
+
+   A confirmation dialog for deleting a task.
+   - Displays a message and two buttons: Cancel / Delete
+   - Calls `onConfirm` when confirmed
+
+## ⚡ Notes
+
+- The app is fully functional **without a backend**.
+- State is managed in `Tasks.tsx` using **React hooks**.
+- The UI updates automatically whenever tasks are **added, edited, or deleted**.
+- Designed with **readability and maintainability** in mind.
+
+## 📦 Tech Stack
+
+- **React** (with hooks)
+- **TypeScript**
+- **Tailwind CSS**
+- **Lucide React** (for icons)
 ```
