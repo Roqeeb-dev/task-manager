@@ -26,13 +26,22 @@ export default function Tasks() {
   const [isModalShown, setIsModalSHown] = useState<true | false>(false);
   const [showDialog, setShowDialog] = useState<true | false>(false);
   const [taskIdToDelete, setTaskIdToDelete] = useState<number | null>(null);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   function deleteTask(id: number) {
     setTasks((prev) => prev.filter((t) => t._id !== id));
   }
 
   function saveTask(task: Task) {
-    setTasks((prev) => [task, ...prev]);
+    setTasks((prev) => {
+      if (editingTask) {
+        return prev.map((t) => (t._id === task._id ? task : t));
+      }
+
+      return [task, ...prev];
+    });
+
+    setEditingTask(null);
   }
 
   function showModal() {
@@ -48,6 +57,11 @@ export default function Tasks() {
     if (taskIdToDelete !== null) {
       deleteTask(taskIdToDelete);
     }
+  }
+
+  function handleEdit(task: Task) {
+    setEditingTask(task);
+    setIsModalSHown(true);
   }
 
   return (
@@ -77,7 +91,11 @@ export default function Tasks() {
         <TaskDetails tasks={tasks} />
 
         {tasks.length > 0 ? (
-          <TaskList tasks={tasks} onDelete={(id) => handleDelete(id)} />
+          <TaskList
+            tasks={tasks}
+            onDelete={(id) => handleDelete(id)}
+            onEdit={(task) => handleEdit(task)}
+          />
         ) : (
           <div className="text-center py-16 border rounded-lg bg-gray-50">
             <p className="text-gray-600">
@@ -90,8 +108,12 @@ export default function Tasks() {
       {/* Modal */}
       <Modal
         isOpen={isModalShown}
-        onClose={() => setIsModalSHown(false)}
+        onClose={() => {
+          setIsModalSHown(false);
+          setEditingTask(null);
+        }}
         onSave={(task) => saveTask(task)}
+        initialTask={editingTask}
       />
 
       {/* Dialog */}

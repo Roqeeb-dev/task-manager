@@ -4,6 +4,7 @@ import { X, Edit } from "lucide-react";
 interface TaskListProps {
   tasks: Task[];
   onDelete: (id: number) => void;
+  onEdit: (task: Task) => void;
 }
 
 const STATUS_STYLES = {
@@ -24,7 +25,7 @@ const STATUS_STYLES = {
   },
 } as const;
 
-export default function TaskList({ tasks, onDelete }: TaskListProps) {
+export default function TaskList({ tasks, onDelete, onEdit }: TaskListProps) {
   return (
     <main className="mt-10">
       <table className="w-full border border-gray-300 my-6">
@@ -72,6 +73,7 @@ export default function TaskList({ tasks, onDelete }: TaskListProps) {
                   {/* Notes */}
                   <div className="group relative">
                     <button
+                      onClick={() => onEdit(task)}
                       className="p-2 rounded-md text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition"
                       aria-label="View notes"
                     >
