@@ -54,69 +54,95 @@ export default function Modal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       {/* Modal */}
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
-        <h2 className="mb-4 text-lg font-semibold">
+      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-black/5">
+        <h2 className="mb-6 text-xl font-semibold text-gray-900">
           {initialTask ? "Edit Task" : "Add Task"}
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            name="title"
-            placeholder="Task title"
-            value={details.title}
-            onChange={handleChange}
-            className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring"
-            required
-          />
-
-          <textarea
-            name="description"
-            placeholder="Task description"
-            rows={3}
-            value={details.description}
-            onChange={handleChange}
-            className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring"
-          />
-
-          <div className="grid grid-cols-2 gap-3">
-            <select
-              name="status"
-              value={details.status}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-600">
+              Title
+            </label>
+            <input
+              type="text"
+              name="title"
+              placeholder="e.g. Finish report"
+              value={details.title}
               onChange={handleChange}
-              className="rounded-md border px-3 py-2"
-            >
-              <option value="pending">Pending</option>
-              <option value="in-progress">In Progress</option>
-              <option value="done">Done</option>
-            </select>
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm
+                     focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+              required
+            />
+          </div>
 
-            <select
-              name="priority"
-              value={details.priority}
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-600">
+              Description
+            </label>
+            <textarea
+              name="description"
+              placeholder="Optional details..."
+              rows={3}
+              value={details.description}
               onChange={handleChange}
-              className="rounded-md border px-3 py-2"
-            >
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-            </select>
+              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 text-sm
+                     focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-600">
+                Status
+              </label>
+              <select
+                name="status"
+                value={details.status}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm
+                       focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+              >
+                <option value="pending">Pending</option>
+                <option value="in-progress">In Progress</option>
+                <option value="done">Done</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-600">
+                Priority
+              </label>
+              <select
+                name="priority"
+                value={details.priority}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm
+                       focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+              >
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
           </div>
 
           <div className="flex justify-end gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-md border px-4 py-2 text-gray-600 hover:bg-gray-100"
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium
+                     text-gray-700 hover:bg-gray-100 transition"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+              className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium
+                     text-white shadow hover:bg-blue-700 transition"
             >
               Save
             </button>

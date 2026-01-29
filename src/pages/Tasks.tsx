@@ -1,6 +1,7 @@
 import TaskDetails from "../components/TaskDetails";
 import TaskList from "../components/TaskList";
 import Modal from "../components/Modal";
+import Dialog from "../components/Dialog";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
@@ -23,6 +24,8 @@ const defaultTask: Task = {
 export default function Tasks() {
   const [tasks, setTasks] = useState<Task[]>([defaultTask]);
   const [isModalShown, setIsModalSHown] = useState<true | false>(false);
+  const [showDialog, setShowDialog] = useState<true | false>(false);
+  const [taskIdToDelete, setTaskIdToDelete] = useState<number | null>(null);
 
   function deleteTask(id: number) {
     setTasks((prev) => prev.filter((t) => t._id !== id));
@@ -34,6 +37,17 @@ export default function Tasks() {
 
   function showModal() {
     setIsModalSHown(true);
+  }
+
+  function handleDelete(id: number) {
+    setTaskIdToDelete(id);
+    setShowDialog(true);
+  }
+
+  function confirmDelete() {
+    if (taskIdToDelete !== null) {
+      deleteTask(taskIdToDelete);
+    }
   }
 
   return (
@@ -63,7 +77,7 @@ export default function Tasks() {
         <TaskDetails tasks={tasks} />
 
         {tasks.length > 0 ? (
-          <TaskList tasks={tasks} onDelete={(id) => deleteTask(id)} />
+          <TaskList tasks={tasks} onDelete={(id) => handleDelete(id)} />
         ) : (
           <div className="text-center py-16 border rounded-lg bg-gray-50">
             <p className="text-gray-600">
@@ -78,6 +92,12 @@ export default function Tasks() {
         isOpen={isModalShown}
         onClose={() => setIsModalSHown(false)}
         onSave={(task) => saveTask(task)}
+      />
+
+      <Dialog
+        isOpen={showDialog}
+        onClose={() => setShowDialog(false)}
+        onConfirm={confirmDelete}
       />
     </main>
   );
