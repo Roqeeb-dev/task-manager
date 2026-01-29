@@ -1,5 +1,6 @@
 import TaskDetails from "../components/TaskDetails";
 import TaskList from "../components/TaskList";
+import Modal from "../components/Modal";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
@@ -21,6 +22,19 @@ const defaultTask: Task = {
 
 export default function Tasks() {
   const [tasks, setTasks] = useState<Task[]>([defaultTask]);
+  const [isModalShown, setIsModalSHown] = useState<true | false>(false);
+
+  function deleteTask(id: number) {
+    setTasks((prev) => prev.filter((t) => t._id !== id));
+  }
+
+  function saveTask(task: Task) {
+    setTasks((prev) => [task, ...prev]);
+  }
+
+  function showModal() {
+    setIsModalSHown(true);
+  }
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
@@ -35,7 +49,10 @@ export default function Tasks() {
           </p>
         </div>
 
-        <button className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-3 text-sm font-medium rounded-lg hover:bg-blue-700 transition shadow-sm">
+        <button
+          onClick={showModal}
+          className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-3 text-sm font-medium rounded-lg hover:bg-blue-700 transition shadow-sm"
+        >
           <Plus size={18} />
           Add Task
         </button>
@@ -46,7 +63,7 @@ export default function Tasks() {
         <TaskDetails tasks={tasks} />
 
         {tasks.length > 0 ? (
-          <TaskList tasks={tasks} />
+          <TaskList tasks={tasks} onDelete={(id) => deleteTask(id)} />
         ) : (
           <div className="text-center py-16 border rounded-lg bg-gray-50">
             <p className="text-gray-600">
@@ -55,6 +72,13 @@ export default function Tasks() {
           </div>
         )}
       </section>
+
+      {/* Modal */}
+      <Modal
+        isOpen={isModalShown}
+        onClose={() => setIsModalSHown(false)}
+        onSave={(task) => saveTask(task)}
+      />
     </main>
   );
 }
